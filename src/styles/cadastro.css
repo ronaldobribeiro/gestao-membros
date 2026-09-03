@@ -1,0 +1,14 @@
+/* Estilos exclusivos do formulario publico de auto-cadastro (rota /cadastro). */
+.cadastro-wrap{ max-width:640px; margin:0 auto; padding:32px 20px 60px; }
+.cadastro-eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; text-align:center; margin-bottom:6px; }
+.cadastro-title{ font-family:'Fraunces',serif; font-size:28px; font-weight:600; text-align:center; margin:0 0 6px; }
+.cadastro-sub{ text-align:center; color:var(--slate); font-size:14px; margin:0 0 28px; }
+.cadastro-card{ background:var(--white); border:1px solid var(--line); border-radius:16px; padding:28px; box-shadow:0 20px 50px -30px rgba(18,22,42,.25); }
+.cadastro-card .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
+.cadastro-card .section-title{ grid-column:1 / -1; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); font-weight:700; margin:18px 0 2px; }
+.cadastro-card .section-title:first-child{ margin-top:0; }
+.cadastro-submit{ width:100%; margin-top:22px; padding:13px 18px; font-size:15px; }
+.cadastro-success-card{ text-align:center; padding:48px 28px; }
+.cadastro-success-icon{ font-size:44px; margin-bottom:10px; }
+.cadastro-success-card h2{ font-family:'Fraunces',serif; font-size:22px; margin:0 0 8px; }
+.cadastro-success-card p{ color:var(--slate); font-size:14px; line-height:1.5; }
