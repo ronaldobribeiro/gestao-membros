@@ -60,9 +60,9 @@ export default function FamiliasView() {
   }, [members, famSearch, famFilterIgrejas, famFilterSituacao]);
   const semFamilia = semFamiliaTodos.slice(0, famSemLimit);
 
-  const totalFamilias = familias.length;
-  const totalVinculados = members.filter((m) => m.familia_id).length;
-  const totalSemFamilia = members.filter((m) => !m.familia_id).length;
+  const totalFamilias = familiasComMembros.length;
+  const totalVinculados = familiasComMembros.reduce((acc, f) => acc + f.membros.length, 0);
+  const totalSemFamilia = semFamiliaTodos.length;
 
   return (
     <>
@@ -91,7 +91,7 @@ export default function FamiliasView() {
           ))}
           <div style={{ position: "relative" }}>
             <button type="button" className="fam-tag-add" onClick={() => setFamIgrejaMenuOpen((v) => !v)}>
-              {famFilterIgrejas.length ? "+ unidade" : "Unidade/igreja"}<ChevronIcon />
+              {famFilterIgrejas.length ? "+ unidade" : "Todas as igrejas"}<ChevronIcon />
             </button>
             {famIgrejaMenuOpen ? (
               <div className="fam-tag-panel">
