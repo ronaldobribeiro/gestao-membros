@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IPI Cavallari - Membros</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --cream:#EEF5FB; --cream-2:#E0EEF8; --line:#D3E4F0; --line-2:#BEDAEA;
+    --gold:#009be7; --ink:#12162A; --ink-3:#262C48; --slate:#4C5D8A; --danger:#7C3345; --ok:#00ba8d; --white:#FFFFFF;
+  }
+  *{ box-sizing:border-box; }
+  html, body{ margin:0; padding:0; width:100%; min-height:100%; }
+  body{ font-family:'Inter',-apple-system,sans-serif; background:var(--cream); color:var(--ink); }
+  .wrap{ max-width:640px; margin:0 auto; padding:32px 20px 60px; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; text-align:center; margin-bottom:6px; }
+  h1{ font-family:'Fraunces',serif; font-size:28px; font-weight:600; text-align:center; margin:0 0 6px; }
+  .sub{ text-align:center; color:var(--slate); font-size:14px; margin:0 0 28px; }
+  .card{ background:var(--white); border:1px solid var(--line); border-radius:16px; padding:28px; box-shadow:0 20px 50px -30px rgba(18,22,42,.25); }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
+  .field{ margin-bottom:0; }
+  .field.full{ grid-column:1 / -1; }
+  .field label{ display:block; font-size:12px; font-weight:600; color:var(--ink-3); margin-bottom:6px; }
+  .field input, .field select{ width:100%; padding:11px 13px; border:1px solid var(--line-2); border-radius:9px; font-size:14px; background:var(--cream); color:var(--ink); font-family:inherit; }
+  .section-title{ grid-column:1 / -1; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); font-weight:700; margin:18px 0 2px; }
+  .section-title:first-child{ margin-top:0; }
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:9px; font-weight:600; font-size:15px; padding:13px 18px; width:100%; margin-top:22px; cursor:pointer; }
+  .btn-gold{ background:var(--gold); color:var(--white); }
+  .btn-gold:hover{ opacity:.9; }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .error-box{ background:#fdf2f2; border:1px solid #f0c9c9; color:var(--danger); font-size:13px; padding:10px 12px; border-radius:8px; margin-bottom:16px; }
+  .success-card{ text-align:center; padding:48px 28px; }
+  .success-icon{ font-size:44px; margin-bottom:10px; }
+  .success-card h2{ font-family:'Fraunces',serif; font-size:22px; margin:0 0 8px; }
+  .success-card p{ color:var(--slate); font-size:14px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const SUPABASE_URL = "https://bzcgocfslmyljbafyxdf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6Y2dvY2ZzbG15bGpiYWZ5eGRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwOTI0MDgsImV4cCI6MjEwMjY2ODQwOH0.bU-q9hRONBXruewi_naK94HY6G4QXZv46LcPCOBfG_0";
+const TABLE = "membresia";
+const IGREJAS = ["IPI Cavallari", "Congregação Vera Cruz"];
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const root = document.getElementById("root");
+
+function esc(v) {
+  if (v === null || v === undefined) return "";
+  return String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+const state = { submitting: false, error: "", done: false };
+
+const FIELDS = [
+  { section: "Dados pessoais" },
+  { key: "nome_completo", label: "Nome completo", type: "text", required: true, full: true },
+  { key: "sexo", label: "Sexo", type: "select", options: ["Masculino", "Feminino"] },
+  { key: "dt_nascimento", label: "Nascimento", type: "date" },
+  { key: "estado_civil", label: "Estado civil", type: "select", options: ["Solteiro(a)", "Casado(a)", "Viúvo(a)", "Divorciado(a)", "União estável"] },
+  { key: "conjuge", label: "Cônjuge", type: "text" },
+  { key: "profissao", label: "Profissão", type: "text" },
+  { key: "naturalidade", label: "Naturalidade", type: "text" },
+  { key: "nacionalidade", label: "Nacionalidade", type: "text" },
+  { key: "pai", label: "Nome do pai", type: "text" },
+  { key: "mae", label: "Nome da mãe", type: "text" },
+  { section: "Contato" },
+  { key: "email", label: "E-mail", type: "email" },
+  { key: "fone", label: "Telefone fixo", type: "text" },
+  { key: "celular", label: "Celular", type: "text" },
+  { key: "endereco", label: "Endereço", type: "text", full: true },
+  { key: "bairro", label: "Bairro", type: "text" },
+  { key: "cep", label: "CEP", type: "text" },
+  { section: "Igreja" },
+  { key: "membresia_igreja", label: "Igreja", type: "select", options: IGREJAS, required: true, full: true },
+  { key: "igreja_anterior", label: "Igreja anterior (se houver)", type: "text", full: true },
+];
+
+function renderField(f) {
+  if (f.section) return '<div class="section-title">' + esc(f.section) + "</div>";
+  const cls = f.full ? "field full" : "field";
+  if (f.type === "select") {
+    return '<div class="' + cls + '"><label for="fld-' + f.key + '">' + esc(f.label) + (f.required ? " *" : "") + "</label>" +
+      '<select id="fld-' + f.key + '" name="' + f.key + '" ' + (f.required ? "required" : "") + '><option value=""></option>' +
+      f.options.map((o) => '<option value="' + esc(o) + '">' + esc(o) + "</option>").join("") + "</select></div>";
+  }
+  return '<div class="' + cls + '"><label for="fld-' + f.key + '">' + esc(f.label) + (f.required ? " *" : "") + '</label><input id="fld-' + f.key + '" name="' + f.key + '" type="' + f.type + '" ' + (f.required ? "required" : "") + " /></div>";
+}
+
+function render() {
+  if (state.done) {
+    root.innerHTML =
+      '<div class="wrap">' +
+        '<div class="card success-card">' +
+          '<div class="success-icon">✅</div>' +
+          '<h2>Cadastro recebido!</h2>' +
+          '<p>Obrigado por se cadastrar. A secretaria da igreja irá revisar suas informações e entrar em contato caso seja necessário.</p>' +
+        "</div>" +
+      "</div>";
+    return;
+  }
+  root.innerHTML =
+    '<div class="wrap">' +
+      '<div class="eyebrow">Gestão de Membros</div>' +
+      '<h1>Cadastro de Novo Membro</h1>' +
+      '<p class="sub">Preencha seus dados abaixo. A secretaria completará seu cadastro após revisão.</p>' +
+      '<div class="card">' +
+        (state.error ? '<div class="error-box">' + esc(state.error) + "</div>" : "") +
+        '<form id="cadastro-form"><div class="form-grid">' +
+          FIELDS.map(renderField).join("") +
+        "</div>" +
+        '<button type="submit" class="btn btn-gold" ' + (state.submitting ? "disabled" : "") + ">" + (state.submitting ? "Enviando…" : "Enviar cadastro") + "</button>" +
+        "</form>" +
+      "</div>" +
+    "</div>";
+
+  document.getElementById("cadastro-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const payload = {};
+    FIELDS.filter((f) => f.key).forEach((f) => {
+      let v = fd.get(f.key);
+      if (v === "") v = null;
+      payload[f.key] = v;
+    });
+    state.submitting = true; state.error = ""; render();
+    const { error } = await sb.from(TABLE).insert(payload);
+    state.submitting = false;
+    if (error) {
+      state.error = "Não foi possível enviar seu cadastro. Tente novamente em instantes.";
+      render();
+      return;
+    }
+    state.done = true;
+    render();
+  });
+}
+
+render();
+</script>
+</body>
+</html>
