@@ -5,7 +5,7 @@ import { initials } from "./icons";
 export function getResponsavelFamilia(f, members) {
   const membros = members.filter((m) => m.familia_id === f.id);
   if (!membros.length) return null;
-  const prioridade = ["Pai", "Mãe", "Cônjuge"];
+  const prioridade = ["Pai", "Mãe", "Cônjuge", "Esposo", "Esposa"];
   for (const papel of prioridade) {
     const alvo = membros.find((m) => m.papel_familia === papel);
     if (alvo) return alvo;

@@ -13,7 +13,7 @@ export const TIPOS_MEMBRO = ["Membro Professo", "Não professos", "Frequentes"];
 export const RECEBIDO_POR_OPCOES = ["Transferência", "Jurisdição", "Batismo", "Batismo e Profissão de Fé", "Frequentes"];
 export const MOTIVOS_DESLIGAMENTO = ["Renúncia expressa", "Transferência", "Jurisdição assumida", "Abandono", "Exclusão disciplinar", "Falecimento"];
 export const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-export const PAPEL_FAMILIA_OPCOES = ["Pai", "Mãe", "Cônjuge", "Filho(a)", "Dependente", "Outro"];
+export const PAPEL_FAMILIA_OPCOES = ["Pai", "Mãe", "Sogro", "Sogra", "Cônjuge", "Esposo", "Esposa", "Filho(a)", "Dependente", "Outro"];
 
 export const AG_CATEGORIAS = [
   { key: "culto", label: "Culto", color: "#009be7" },
