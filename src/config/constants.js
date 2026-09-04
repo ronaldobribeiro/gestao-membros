@@ -16,12 +16,12 @@ export const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"
 export const PAPEL_FAMILIA_OPCOES = ["Pai", "Mãe", "Sogro", "Sogra", "Cônjuge", "Esposo", "Esposa", "Filho(a)", "Dependente", "Outro"];
 
 export const AG_CATEGORIAS = [
-  { key: "culto", label: "Culto", color: "#009be7" },
-  { key: "reuniao", label: "Reunião", color: "#393bd8" },
-  { key: "estudo", label: "Estudo / Discipulado", color: "#00acbd" },
-  { key: "visita", label: "Visita Pastoral", color: "#C0447B" },
-  { key: "social", label: "Social / Confraternização", color: "#00ba8d" },
-  { key: "especial", label: "Evento especial", color: "#8B5CF6" },
+  { key: "culto", label: "Culto", color: "#042F68" },
+  { key: "reuniao", label: "Reunião", color: "#015284" },
+  { key: "estudo", label: "Estudo / Discipulado", color: "#007699" },
+  { key: "visita", label: "Visita Pastoral", color: "#189AA8" },
+  { key: "social", label: "Social / Confraternização", color: "#4ABDB1" },
+  { key: "especial", label: "Evento especial", color: "#88DEB9" },
   { key: "outro", label: "Outro", color: "#8D91AC" },
 ];
 export function agCategoryInfo(key) {
@@ -31,7 +31,7 @@ export function agCategoryInfo(key) {
 export const MINISTERIOS_LIST = ["Pastores", "Presbíteros", "Diáconos e Acolhimento", "Cursos da Família", "Repense", "Louvor e Mídia", "Ministério Infantil", "Torre de Oração", "Jovens e Adolescentes"];
 export const PROCESSOS_LIST = ["Acolher", "Formar", "Servir"];
 
-export const CAT_COLORS = ["#00ba8d", "#00acbd", "#009be7", "#0085ff", "#0068fb", "#393bd8", "#8B5CF6", "#C0447B", "#E08E45", "#009be7", "#00ba8d", "#393bd8"];
+export const CAT_COLORS = ["#042F68", "#024277", "#005587", "#006992", "#007C9D", "#0D90A5", "#24A3AA", "#3FB6B0", "#61C9B4", "#83DCB8", "#A4EDBF", "#C6FFC5"];
 
 export const FIELDS = [
   { key: "nome_completo", label: "Nome completo", type: "text", required: true, full: true },

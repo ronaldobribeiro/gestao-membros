@@ -2,23 +2,12 @@ import { useState } from "react";
 import { useData } from "../state/DataContext";
 import { useModals } from "../state/ModalsContext";
 import { normalizeName } from "../utils/normalizers";
-import { familiaAvatarColor, familiaIniciais, familiaStatus, getResponsavelFamilia, getUltimaVisitaFamilia, mapsUrlFor } from "../utils/familyHelpers";
-import { daysAgoLabel } from "../utils/formatters";
-import { DotsIcon, PencilIcon, UserPlusIcon, CalendarIcon, TrashIcon, PhoneIcon, UsersIcon, PinIcon } from "./icons/NavIcons";
+import { familiaAvatarColor, familiaIniciais, familiaStatus, getResponsavelFamilia } from "../utils/familyHelpers";
 
-function MapThumbSvg({ color }) {
-  return (
-    <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMid slice">
-      <rect width="40" height="40" fill={color} fillOpacity="0.14"></rect>
-      <path d="M0 14 L40 10 M0 26 L40 30 M13 0 L9 40 M29 0 L33 40" stroke={color} strokeOpacity="0.35" strokeWidth="1.4" fill="none"></path>
-      <path d="M20 11a5.5 5.5 0 0 0-5.5 5.5c0 4.1 5.5 9.9 5.5 9.9s5.5-5.8 5.5-9.9A5.5 5.5 0 0 0 20 11z" fill={color}></path>
-      <circle cx="20" cy="16.5" r="2" fill="white"></circle>
-    </svg>
-  );
-}
+import { DotsIcon, PencilIcon, UserPlusIcon, CalendarIcon, TrashIcon, PhoneIcon } from "./icons/NavIcons";
 
 export default function FamiliaCard({ f, nomesDuplicados }) {
-  const { members, agenda, deleteFamiliaAction, removeMemberFromFamilia } = useData();
+  const { members, deleteFamiliaAction, removeMemberFromFamilia } = useData();
   const { openFamiliaModal, openAdicionarMembroFamilia, openAgendarVisitaFamilia, openMemberModalById } = useModals();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,10 +16,7 @@ export default function FamiliaCard({ f, nomesDuplicados }) {
   const isDupName = nomesDuplicados.has(normalizeName(f.nome_familia));
   const responsavelSuffix = isDupName && responsavel ? " (" + (responsavel.nome_completo || "").split(" ")[0] + ")" : "";
   const avColor = familiaAvatarColor(f);
-  const bairro = (responsavel && responsavel.bairro) || f.bairro_familia || "";
-  const enderecoBusca = [f.endereco_familia, bairro].filter(Boolean).join(", ");
   const contatoFone = responsavel ? (responsavel.celular || responsavel.fone) : null;
-  const ultimaVisita = getUltimaVisitaFamilia(f, agenda);
 
   return (
     <div className={"fam-card2" + (f.duplicado ? " fam-card-duplicate" : "") + (status === "pendente" ? " fam-card-pendente" : "")}>
@@ -87,27 +73,6 @@ export default function FamiliaCard({ f, nomesDuplicados }) {
             <span><span className="fam-info-label">Contato:</span>{(responsavel.nome_completo || "").split(" ")[0]} · <a href={"tel:" + String(contatoFone).replace(/[^\d+]/g, "")}>{contatoFone}</a></span>
           ) : <span className="fam-info-empty">Nenhum contato principal definido</span>}
         </div>
-        <div className="fam-info-row">
-          <CalendarIcon />
-          <span><span className="fam-info-label">Última visita pastoral:</span> {ultimaVisita ? daysAgoLabel(ultimaVisita.data_inicio) : <span className="fam-info-empty">Não registrada</span>}</span>
-        </div>
-        <div className="fam-info-row">
-          <UsersIcon />
-          {f.lider_familia || f.grupo_familia ? (
-            <span><span className="fam-info-label">Líder de célula:</span>{f.lider_familia || "—"}{f.grupo_familia ? " · " + f.grupo_familia : ""}</span>
-          ) : <span className="fam-info-empty">Sem líder ou grupo vinculado</span>}
-        </div>
-        {bairro || f.endereco_familia ? (
-          <a className="fam-map-thumb" href={mapsUrlFor(enderecoBusca || f.nome_familia)} target="_blank" rel="noopener noreferrer">
-            <span className="fam-map-thumb-swatch"><MapThumbSvg color={avColor} /></span>
-            <span className="fam-map-thumb-text">
-              <span className="fam-map-thumb-bairro">{bairro ? "Bairro: " + bairro : f.endereco_familia}</span>
-              <span className="fam-map-thumb-cta">Ver no mapa →</span>
-            </span>
-          </a>
-        ) : (
-          <div className="fam-info-row"><PinIcon /><span className="fam-info-empty">Endereço não informado</span></div>
-        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 :root{
-  --cream:#EEF5FB; --cream-2:#E0EEF8; --line:#D3E4F0; --line-2:#BEDAEA;
-  --gold:#009be7; --gold-2:#00acbd; --ink:#12162A; --ink-2:#1B2036; --ink-3:#262C48;
-  --slate:#4C5D8A; --slate-2:#8D91AC; --lav:#C9CBDE; --danger:#7C3345; --warn:#393bd8; --ok:#00ba8d; --white:#FFFFFF;
-  --brand-1:#00ba8d; --brand-2:#00acbd; --brand-3:#009be7; --brand-4:#0085ff; --brand-5:#0068fb; --brand-6:#393bd8;
-  --cal-line:#EAF1F8;
+  --cream:#F2F7F8; --cream-2:#E7F1F3; --line:#DBE7EC; --line-2:#C3D7DE;
+  --gold:#0084A1; --gold-2:#31AFAE; --ink:#0B2036; --ink-2:#0F2941; --ink-3:#173A57;
+  --slate:#50697D; --slate-2:#89A0AF; --lav:#A9C2CF; --danger:#A13A52; --warn:#A9660C; --ok:#0F9D72; --white:#FFFFFF;
+  --brand-1:#0F9D72; --brand-2:#31AFAE; --brand-3:#0084A1; --brand-4:#00598A; --brand-5:#00598A; --brand-6:#00598A;
+  --cal-line:#E7F1F3;
 }
